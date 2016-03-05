@@ -1,0 +1,24 @@
+<html>
+</body>
+<h2>Top songs on Spotify for {{ name }}</h2>
+<div class="title_sp">
+	<ul>
+		{% for key, value in data.items() %}
+			<li>#{{ key }} - {{ value }}</li>
+		{% endfor %}
+	</ul>
+</div>
+<h2>... and you might want to check those on SoundCloud</h2>
+<div class="title_sc">
+	<ul>
+		{% for value_sc in data2 %}
+			<li> {{ value_sc }}</li>
+		{% endfor %}
+	</ul>
+	<br/>
+</div>
+<div>
+    <a href="/">Home page</a>
+</div>
+</body>
+</html>
