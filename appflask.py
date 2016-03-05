@@ -28,9 +28,7 @@ def my_form_post():
 		count = 1
 		for track in results['tracks'][:10]:
 			mydict[count] = track['name']
-			#mydict['album ' + str(count)] = track['album']['name']
 			count += 1
-		#return jsonify({'tracks': mytab})
 		#SOUNDCLOUD
 		tracks = client.get('/tracks', q=name)
 		for track in tracks:
