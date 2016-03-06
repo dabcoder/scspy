@@ -21,6 +21,7 @@ def my_form_post():
 		artist= spotify.search(q='artist:' + name, type='artist')
 		artist_id = 'spotify:artist:' + str(artist['artists']['items'][0]['external_urls']['spotify'][32:])
 		results = spotify.artist_top_tracks(artist_id)
+		imgUrl = artist['artists']['items'][0]['images'][2]['url']
 
 		mydict = {}
 		mytab = []
@@ -33,7 +34,7 @@ def my_form_post():
 		tracks = client.get('/tracks', q=name)
 		for track in tracks:
 			mytab.append(track.title)
-		return render_template('songs.html', data=mydict, data2=mytab, name=name)
+		return render_template('songs.html', data=mydict, data2=mytab, name=name, img=imgUrl)
 
 	except (ValueError, IndexError) as error:
 		return render_template('not_found.html')

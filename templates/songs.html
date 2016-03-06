@@ -1,6 +1,10 @@
 <html>
 </body>
 <h2>Top songs on Spotify for {{ name }}</h2>
+<div class="image">
+	<img src="{{ img }}"> 
+	<br/>
+</div>
 <div class="title_sp">
 	<ul>
 		{% for key, value in data.items() %}
