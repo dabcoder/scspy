@@ -12,6 +12,9 @@
 		{% endfor %}
 	</ul>
 </div>
+<div class="player">
+	<iframe src="https://embed.spotify.com/?uri={{ toptrack }}" width="300" height="150" frameborder="0" allowtransparency="true"></iframe>
+</div>
 <h2>... and you might want to check those on SoundCloud</h2>
 <div class="title_sc">
 	<ul>
@@ -22,7 +25,14 @@
 	<br/>
 </div>
 <div>
+	<iframe width="50%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ toptrackSC }}&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+</div>
+<div>
+	<br/>
     <a href="/">Home page</a>
 </div>
 </body>
 </html>
+
+
+
