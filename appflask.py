@@ -18,7 +18,7 @@ def my_form_post():
     #SPOTIFY
 	spotify = spotipy.Spotify()
 	#SOUNDCLOUD
-	client = soundcloud.Client(client_id='my_client_ID')
+	client = soundcloud.Client(client_id='client_ID')
 
 	try:
 		#SPOTIFY

@@ -14,4 +14,3 @@ def test_myform_get(client):
 	assert response.headers['Location'] == 'http://localhost/'
 	response = client.post(url, data={'artist': 'Dr Dre'})
 	assert response.status_code == 200
-	assert response.text == 5

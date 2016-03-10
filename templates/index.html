@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+</head>
 <body>
+	<br/>
     <h1>Artist</h1>
-    <form action="/songs" method="POST">
-        <input type="text" name="artist">
-        <input type="submit" name="my-form" value="Send">
-    </form>
+    <div class="style-1">
+	    <form action="/songs" method="POST">
+	        <input type="text" name="artist" required>
+	        <input type="submit" class="styled-button" name="my-form" value="Submit">
+	    </form>
+    </div>
 </body>
 </html>
