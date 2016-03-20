@@ -21,8 +21,8 @@
 <h2>... and you might want to check those on SoundCloud</h2>
 <div class="title_sc">
 	<ul>
-		{% for value_sc in data2 %}
-			<li> {{ value_sc }}</li>
+		{% for key2, value2 in data2.items() %}
+			<li>{{ key2 }} - [<a href="{{ value2 }}" target="_blank">link</a>]</li>
 		{% endfor %}
 	</ul>
 	<br/>
@@ -36,6 +36,3 @@
 </div>
 </body>
 </html>
-
-
-

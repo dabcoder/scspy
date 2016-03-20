@@ -18,7 +18,7 @@ def my_form_post():
     #SPOTIFY
 	spotify = spotipy.Spotify()
 	#SOUNDCLOUD
-	client = soundcloud.Client(client_id='client_ID')
+	client = soundcloud.Client(client_id='my_client_ID')
 
 	try:
 		#SPOTIFY
@@ -28,7 +28,7 @@ def my_form_post():
 		imgUrl = artist['artists']['items'][0]['images'][2]['url']
 
 		mydict = {}
-		mytab = []
+		mydict2 = {}
 
 		count = 1
 		for track in results['tracks'][:10]:
@@ -38,9 +38,9 @@ def my_form_post():
 		#SOUNDCLOUD
 		tracks = client.get('/tracks', q=name)
 		for track in tracks:
-			mytab.append(track.title)
+			mydict2[track.title] = track.permalink_url
 		top_trackSC = tracks[0].id
-		return render_template('songs.html', data=mydict, data2=mytab, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
+		return render_template('songs.html', data=mydict, data2=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
 
 	except (ValueError, IndexError) as error:
 		return render_template('not_found.html')
