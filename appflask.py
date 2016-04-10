@@ -8,9 +8,6 @@ import spotipy
 import soundcloud
 
 appf = Flask(__name__)
-#Local DB Config
-#appf.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/scspy'
-#Heroku DB Config
 appf.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 appf.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(appf)
@@ -26,11 +23,11 @@ def my_form():
 def my_form_post():
 	if request.method == 'GET':
 		return redirect(url_for('my_form'))
-	name = request.form['artist']
+	name = request.form['artist'].lstrip()
     #SPOTIFY
 	spotify = spotipy.Spotify()
 	#SOUNDCLOUD
-	client = soundcloud.Client(client_id='SC_Client_ID')
+	client = soundcloud.Client(client_id='SC_client_ID')
 
 	try:
 		#SPOTIFY
@@ -53,20 +50,37 @@ def my_form_post():
 			mydict2[track.title] = track.permalink_url
 		top_trackSC = tracks[0].id
 
-		#Add data to the Postgres DB
-		date_r = datetime.datetime.now()
-		results_db = Result(
-			artist_q=name,
-			date_sent=date_r,
-		)
-		db.session.add(results_db)
-		db.session.commit()
-
+		try:
+			#Add data to the Postgres DB
+			date_r = datetime.datetime.now()
+			results_db = Result(
+				artist_q=name,
+				date_sent=date_r,
+			)
+			db.session.add(results_db)
+			db.session.commit()
+		except:
+			print "Unable to insert in the database"
 		#Returns all the values and serve them in the template
 		return render_template('songs.html', data=mydict, data2=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
 
 	except (ValueError, IndexError) as error:
 		return render_template('not_found.html')
+
+@appf.route('/dbqueries', methods=['GET'])
+def get_queries():
+	results_queries = []
+	result_entry = {}
+	try:
+		result_a = db.session.execute("SELECT * FROM results;")
+		for e in result_a:
+			result_entry['artist'] = e.artist_q
+			result_entry['date'] = e.date_sent
+			results_queries.append(result_entry.copy())
+		print results_queries
+		return render_template('dbqueries.html', data=results_queries)
+	except:
+		print "Something went wrong!"		
 
 @appf.errorhandler(404)
 def page_not_found(e):

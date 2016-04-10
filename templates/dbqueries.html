@@ -1,0 +1,13 @@
+<html>
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+</head>
+</body>
+<h2>List of queries</h2>
+<div class="title_q">
+	<ul>
+		{% for e in data %}
+			<li>{{ e['artist'] }} - {{ e['date'] }}</li>
+		{% endfor %}
+	</ul>
+</div>

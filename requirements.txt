@@ -14,7 +14,7 @@ Mako==1.0.4
 MarkupSafe==0.23
 post==0.0.5
 psycopg2==2.6.1
-public==0.0.0
+public==0.0.21
 python-editor==1.0
 query-string==0.0.5
 request==0.0.5
