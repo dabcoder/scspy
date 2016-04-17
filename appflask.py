@@ -47,9 +47,9 @@ def my_form_post():
 		#SOUNDCLOUD
 		tracks = client.get('/tracks', q=name)
 		for track in tracks:
-			mydict2[track.title] = track.permalink_url
+			mydict2[track.title] = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + str(track.id)
+		#For the SoundCloud widget
 		top_trackSC = tracks[0].id
-
 		try:
 			#Add data to the Postgres DB
 			date_r = datetime.datetime.now()

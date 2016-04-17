@@ -2,7 +2,7 @@
 <head>
 	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
 </head>
-</body>
+<body>
 <h2>Top songs on Spotify for {{ name }}</h2>
 <div class="image">
 	<img src="{{ img }}"> 
@@ -22,13 +22,13 @@
 <div class="title_sc">
 	<ul>
 		{% for key2, value2 in data2.items() %}
-			<li>{{ key2 }} - [<a href="{{ value2 }}" target="_blank">link</a>]</li>
+			<li>{{ key2 }} - [<a href="{{ value2 }}" target="sc_iframe">link</a>]</li> 
 		{% endfor %}
 	</ul>
 	<br/>
 </div>
 <div>
-	<iframe width="50%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ toptrackSC }}&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<iframe name="sc_iframe" width="50%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ toptrackSC }}&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
 </div>
 <div>
 	<br/>
