@@ -10,8 +10,8 @@
 </div>
 <div class="title_sp">
 	<ul>
-		{% for key, value in data.items() %}
-			<li>#{{ key }} - {{ value }}</li>
+		{% for rank, title in sp_data.items() %}
+			<li>#{{ rank }} - {{ title }}</li>
 		{% endfor %}
 	</ul>
 </div>
@@ -21,8 +21,8 @@
 <h2>... and you might want to check those on SoundCloud</h2>
 <div class="title_sc">
 	<ul>
-		{% for key2, value2 in data2.items() %}
-			<li>{{ key2 }} - [<a href="{{ value2 }}" target="sc_iframe">link</a>]</li> 
+		{% for songTitle, scLink in sc_data.items() %}
+			<li>{{ songTitle }} - [<a href="{{ scLink }}" target="sc_iframe">link</a>]</li> 
 		{% endfor %}
 	</ul>
 	<br/>

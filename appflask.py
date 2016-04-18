@@ -27,7 +27,7 @@ def my_form_post():
     #SPOTIFY
 	spotify = spotipy.Spotify()
 	#SOUNDCLOUD
-	client = soundcloud.Client(client_id='SC_client_ID')
+	client = soundcloud.Client(client_id=os.environ['SC_CLIENT_ID'])
 
 	try:
 		#SPOTIFY
@@ -62,7 +62,7 @@ def my_form_post():
 		except:
 			print "Unable to insert in the database"
 		#Returns all the values and serve them in the template
-		return render_template('songs.html', data=mydict, data2=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
+		return render_template('songs.html', sp_data=mydict, sc_data=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
 
 	except (ValueError, IndexError) as error:
 		return render_template('not_found.html')
