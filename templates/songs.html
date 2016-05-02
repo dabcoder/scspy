@@ -27,8 +27,16 @@
 	</ul>
 	<br/>
 </div>
-<div>
+<div class="widget">
 	<iframe name="sc_iframe" width="50%" height="150" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ toptrackSC }}&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+	<br/><br/>
+</div>
+<div class="recommendations">
+	Related artists: 
+	{% for a in recom[:-1] %}
+		<i>{{ a }},</i>
+	{% endfor %}
+	<i>{{ recom[-1] }}</i>
 </div>
 <div>
 	<br/>

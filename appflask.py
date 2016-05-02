@@ -35,9 +35,11 @@ def my_form_post():
 		artist_id = 'spotify:artist:' + str(artist['artists']['items'][0]['external_urls']['spotify'][32:])
 		results = spotify.artist_top_tracks(artist_id)
 		imgUrl = artist['artists']['items'][0]['images'][2]['url']
+		related = spotify.artist_related_artists(artist_id)
 
 		mydict = {}
 		mydict2 = {}
+		recommended_l = []
 
 		count = 1
 		for track in results['tracks'][:10]:
@@ -48,6 +50,10 @@ def my_form_post():
 		tracks = client.get('/tracks', q=name)
 		for track in tracks:
 			mydict2[track.title] = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + str(track.id)
+		for artist_related in related['artists'][:10]:
+			recommended_l.append(artist_related['name'])
+		recommendations = [x.encode('UTF8') for x in recommended_l]
+		print recommendations
 		#For the SoundCloud widget
 		top_trackSC = tracks[0].id
 		try:
@@ -62,7 +68,7 @@ def my_form_post():
 		except:
 			print "Unable to insert in the database"
 		#Returns all the values and serve them in the template
-		return render_template('songs.html', sp_data=mydict, sc_data=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC)
+		return render_template('songs.html', sp_data=mydict, sc_data=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC, recom=recommendations)
 
 	except (ValueError, IndexError) as error:
 		return render_template('not_found.html')
@@ -77,7 +83,6 @@ def get_queries():
 			result_entry['artist'] = e.artist_q
 			result_entry['date'] = e.date_sent
 			results_queries.append(result_entry.copy())
-		print results_queries
 		return render_template('dbqueries.html', data=results_queries)
 	except:
 		print "Something went wrong!"		
