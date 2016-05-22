@@ -37,25 +37,28 @@ def my_form_post():
 		imgUrl = artist['artists']['items'][0]['images'][2]['url']
 		related = spotify.artist_related_artists(artist_id)
 
-		mydict = {}
-		mydict2 = {}
+		spotify_song_list = {}
+		soundcloud_song_list = {}
 		recommended_l = []
-
 		count = 1
 		for track in results['tracks'][:10]:
-			mydict[count] = track['name']
+			spotify_song_list[count] = track['name']
 			count += 1
 		top_track = results['tracks'][0]['uri']
-		#SOUNDCLOUD
-		tracks = client.get('/tracks', q=name)
-		for track in tracks:
-			mydict2[track.title] = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + str(track.id)
 		for artist_related in related['artists'][:10]:
 			recommended_l.append(artist_related['name'])
-		recommendations = [x.encode('UTF8') for x in recommended_l]
-		print recommendations
-		#For the SoundCloud widget
-		top_trackSC = tracks[0].id
+		recommendations = [unicode(x).decode('utf8') for x in recommended_l]
+		#SOUNDCLOUD
+		tracks = client.get('/tracks', q=name)
+		if tracks != []:
+			for track in tracks:
+				soundcloud_song_list[track.title] = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + str(track.id)
+			#For the SoundCloud widget
+			top_trackSC = tracks[0].id
+		else:
+			soundcloud_song_list = 0
+			top_trackSC = 0
+			print soundcloud_song_list, top_trackSC
 		try:
 			#Add data to the Postgres DB
 			date_r = datetime.datetime.now()
@@ -68,9 +71,10 @@ def my_form_post():
 		except:
 			print "Unable to insert in the database"
 		#Returns all the values and serve them in the template
-		return render_template('songs.html', sp_data=mydict, sc_data=mydict2, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC, recom=recommendations)
+		return render_template('songs.html', sp_data=spotify_song_list, sc_data=soundcloud_song_list, name=name, img=imgUrl, toptrack=top_track, toptrackSC=top_trackSC, recom=recommendations)
 
 	except (ValueError, IndexError) as error:
+		print error
 		return render_template('not_found.html')
 
 @appf.route('/dbqueries', methods=['GET'])
@@ -87,9 +91,9 @@ def get_queries():
 	except:
 		print "Something went wrong!"		
 
-@appf.errorhandler(404)
+@appf.errorhandler(500)
 def page_not_found(e):
-	return render_template('404.html')
+	return render_template('500.html')
 
 if __name__ == '__main__':
 	appf.run()
