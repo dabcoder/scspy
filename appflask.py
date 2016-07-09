@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template, redirect
 from flask import url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from healthcheck import HealthCheck, EnvironmentDump
+
 
 import os
 import datetime
+import urllib
 import spotipy
 import soundcloud
 
@@ -14,11 +17,25 @@ db = SQLAlchemy(appf)
 
 from models import Result
 
+#Monitoring
+health = HealthCheck(appf, "/healthcheck")
 
+def website_available():
+	code = urllib.urlopen("http://[url_of_Server]").getcode()
+	print code
+	if code == 200:
+		return True, "Website up"
+	else:
+		return False, "Something is wrong!"
+
+health.add_check(website_available)
+
+#Index page
 @appf.route('/')
 def my_form():
     return render_template("index.html")
 
+#Get songs
 @appf.route('/songs', methods=['GET','POST'])
 def my_form_post():
 	if request.method == 'GET':
@@ -77,6 +94,7 @@ def my_form_post():
 		print error
 		return render_template('not_found.html')
 
+#Get list of queries, stored in Postgres
 @appf.route('/dbqueries', methods=['GET'])
 def get_queries():
 	results_queries = []
