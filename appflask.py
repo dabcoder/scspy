@@ -14,21 +14,9 @@ appf = Flask(__name__)
 appf.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 appf.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(appf)
+client = soundcloud.Client(client_id=os.environ['SC_CLIENT_ID'])
 
 from models import Result
-
-#Monitoring
-health = HealthCheck(appf, "/healthcheck")
-
-def website_available():
-	code = urllib.urlopen("http://[url_of_Server]").getcode()
-	print code
-	if code == 200:
-		return True, "Website up"
-	else:
-		return False, "Something is wrong!"
-
-health.add_check(website_available)
 
 #Index page
 @appf.route('/')
@@ -44,7 +32,6 @@ def my_form_post():
     #SPOTIFY
 	spotify = spotipy.Spotify()
 	#SOUNDCLOUD
-	client = soundcloud.Client(client_id=os.environ['SC_CLIENT_ID'])
 
 	try:
 		#SPOTIFY
