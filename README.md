@@ -9,6 +9,7 @@
 
 1. Clone this repository
 2. Create a virtualenv and install the requirements</li>
-3. Register an app on SoundCloud via: http://soundcloud.com/you/apps/new</li>
-4. Run the app: `python manage.py runserver`
-5. Go to `http://localhost:5000/` and give it a try
+3. Register an app on SoundCloud via: http://soundcloud.com/you/apps/new</li>  
+4. Replace `your_sc_appID` with your actual SoundCloud Client ID  
+5. Run the app: `python manage.py runserver`
+6. Go to `http://localhost:5000/` and give it a try

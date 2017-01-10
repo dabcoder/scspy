@@ -14,7 +14,7 @@ appf = Flask(__name__)
 appf.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 appf.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(appf)
-client = soundcloud.Client(client_id=os.environ['SC_CLIENT_ID'])
+client = soundcloud.Client(client_id=your_sc_appID)
 
 from models import Result
 
